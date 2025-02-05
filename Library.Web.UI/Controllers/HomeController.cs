@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Library.Web.UI.Controllers
 {
-    public class HomeController(LibraryDbContext libraryDb) : Controller
+    public class HomeController() : Controller
     {
        
         public IActionResult Index()
