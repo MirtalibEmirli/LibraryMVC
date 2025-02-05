@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Library.Web.UI.Controllers
+namespace Library.Web.UI.Controllers;
+
+public class BookController : Controller
 {
-    public class BookController : Controller
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        return View();
     }
 }

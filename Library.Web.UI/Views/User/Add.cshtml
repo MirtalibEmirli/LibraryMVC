@@ -1,0 +1,55 @@
+﻿@model Library.Web.UI.Models.UserAddViewModel
+@{
+    ViewData["Title"] = "MrLibrary";
+    Layout = "../../Views/Shared/UserLayout.cshtml";
+}
+
+
+<div class="container">
+    <h2>Add New User</h2>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+    <form asp-action="Add" method="post" enctype="multipart/form-data">
+        <input  type="hidden" asp-for="User.Id"/>
+        <div class="user-card-header">
+         
+            <img class="user-avatar" src="@Model.User.ProfileImageUrl" alt="user" />
+        </div>
+        <div class="form-group">
+            <label asp-for="User.FirstName" class="control-label">First Name</label>
+            <input asp-for="User.FirstName" class="form-control" />
+            <span asp-validation-for="User.FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="User.LastName" class="control-label">Last Name</label>
+            <input asp-for="User.LastName" class="form-control" />
+            <span asp-validation-for="User.LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="User.Age" class="control-label">Age</label>
+            <input asp-for="User.Age" class="form-control" />
+            <span asp-validation-for="User.Age" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="User.Speciality" class="control-label">Speciality</label>
+            <input asp-for="User.Speciality" class="form-control" />
+            <span asp-validation-for="User.Speciality" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="User.ProfileImageUrl" class="control-label">Profile Image </label>
+            <input id="image" src="@Model.User.ProfileImageUrl" name="ProfileImageFile" accept="image/*" type="file" class="form-control" />
+            <span asp-validation-for="User.ProfileImageUrl" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" style="" class=" mb-4 mt-4 btn btn-primary">Add User</button>
+            <a asp-action="Index" class="mb-4 mt-4 btn btn-outline-primary">Cancel</a>
+        </div>
+    </form>
+</div>

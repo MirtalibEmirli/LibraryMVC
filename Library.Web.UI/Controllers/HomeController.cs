@@ -1,20 +1,22 @@
 ﻿using System.Diagnostics;
-using Library.Web.UI.Models;
-using LibraryMVC.DataAcces.Context;
+using LibraryMVC.Application.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Library.Web.UI.Controllers
+namespace Library.Web.UI.Controllers;
+
+public class HomeController(IBookService bookService, IUserService userService, ICourseService courseService) : Controller
 {
-    public class HomeController(LibraryDbContext libraryDb) : Controller
+    private readonly IBookService _bookService = bookService;
+    private readonly ICourseService _courseService = courseService;
+    private readonly IUserService _userService = userService;
+    public IActionResult Index()
     {
-       
-        public IActionResult Index()
-        {
-            
 
-            return View();
-        }
-
-        
+        ViewBag.UserCount = _userService.GetAll().Count;
+        ViewBag.BookCount = _courseService.GetAll().Count;
+        ViewBag.CourseCount = _bookService.GetAll().Count;
+        return View();
     }
+
+
 }

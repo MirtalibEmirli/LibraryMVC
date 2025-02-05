@@ -1,22 +1,28 @@
 ﻿using LibraryMVC.Domain.Abstracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-namespace LibraryMVC.Domain.Entities
+namespace LibraryMVC.Domain.Entities;
+
+public partial class User : IEntity
 {
-    public class User : IEntity
-    {
-        public required int Id { get; set; }
-        public required string Name { get; set; }
-        public required string SurName { get; set; }
-        public required int Age { get; set; }
-        public   string Speciality { get; set; }
-        public   string ProfileImageUrl { get; set; }
+    public int Id { get; set; }
+    [Required(ErrorMessage = "FirstName is required")]
+    public string? FirstName { get; set; }
+    [Required(ErrorMessage = "LastName  is required")]
+    public string? LastName { get; set; }
+    [Required(ErrorMessage = "Age is required")]
 
-        public ICollection<UserBook> UserBooks { get; set; }
-        public ICollection<UserCourse> UserCourses { get; set; }
-    }
+    public int? Age { get; set; }
+
+    [Required(ErrorMessage = "Speciality  is required")]
+
+    public string? Speciality { get; set; }
+
+    public string? ProfileImageUrl { get; set; }
+
+    public virtual ICollection<Book> Books { get; set; } = new List<Book>();
+
+    public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
 }

@@ -21,6 +21,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LibraryMVC.Domain\LibraryMVC.Domain.csproj" />
+    <ProjectReference Include="..\LibraryMVC.Repository\LibraryMVC.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Context\" />
   </ItemGroup>
 
 </Project>

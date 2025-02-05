@@ -1,185 +1,112 @@
-﻿using LibraryMVC.Domain.Entities;
+﻿using Library.Web.UI.Models;
+using LibraryMVC.Application.Abstracts;
+using LibraryMVC.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Library.Web.UI.Controllers;
 
-public class UserController : Controller
+public class UserController(IUserService userService) : Controller
 {
+    private readonly IUserService _userService = userService;
     public IActionResult Index()
     {
-        return View();
+
+        var model = _userService.GetAll();
+        return View(model);
     }
 
-    //[HttpGet]
-    //public IActionResult Add()
-    //{
-    //    var sCities = new List<SelectListItem>();
-    //    foreach (var item in cities)
-    //    {
-    //        sCities.Add(new SelectListItem { Text = item.Name, Value = item.AreaCode.ToString() });
-    //    }
+    [HttpGet]
+    public IActionResult Add()
+    {
+        var model = new UserAddViewModel
+        {
 
-    //    var vm = new UserAddViewModel()
-    //    {
-    //        Cities = sCities,
-    //        User = new User(),
+            User = new User()
+        };
+        return View(model);
+    }
 
-    //    };
+    [HttpPost]
+    public IActionResult Add(UserAddViewModel userAddView, IFormFile? ProfileImageFile)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = userAddView.User;
+            if (ProfileImageFile != null && ProfileImageFile.Length > 0)
+            {
+                string fileExtension = Path.GetExtension(ProfileImageFile.FileName);
+                string uniqeFileName = $"{Guid.NewGuid()}{fileExtension}";
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", uniqeFileName);
 
-    //    return View(vm);
-    //}
+                using (var stream = new FileStream(path, FileMode.Create))
+                    ProfileImageFile.CopyTo(stream);
 
-    //[HttpPost]
-    //public IActionResult Add(UserAddViewModel userVM)
-    //{
-    //    if (ModelState.IsValid)
-    //    {
-    //        var user = userVM.User;
-    //        Users = ReadAllUsers();
-    //        Users.Add(user);
-    //        WriteAllUsers();
+                user.ProfileImageUrl = "/Images/" + uniqeFileName;
 
+                Console.WriteLine("user.ProfileImageUrl: " + user.ProfileImageUrl);
+            }
+            _userService.Add(user);
+            return RedirectToAction("Index");
+        }
+        return RedirectToAction("Add");
+    }
 
-    //        return Redirect("/home/index");
-    //    }
-    //    else
-    //    {
-    //        var sCities = new List<SelectListItem>();
-    //        foreach (var item in cities)
-    //        {
-    //            sCities.Add(new SelectListItem { Text = item.Name, Value = item.AreaCode.ToString() });
-    //        }
+    [HttpGet]
+    public IActionResult Edit(int id = -1)
+    {
+        if (id != -1)
+        {
+            var user = _userService.GetById(id);
+            var userEditVm = new UserEditViewModel { User = user };
+            return View(userEditVm);
+        }
+        return RedirectToAction("Index");
+    }
+    [HttpPost]
+    public IActionResult Edit(UserEditViewModel userEditViewModel, IFormFile? ProfileImageFile)
 
-    //        var vm = new UserAddViewModel()
-    //        {
-    //            Cities = sCities,
-    //            User = new User(),
-
-    //        };
-    //        return View(vm);
-    //    }
-
-
-
-
-
-
-    //}
-
-
-    //public IActionResult Details(Guid id)
-    //{
-
-    //    if (id != Guid.Empty)
-    //    {
-    //        var user = ReadByID(id);
-    //        UserDTO userDTO = new UserDTO
-    //        {
-    //            FirstName = user.FirstName,
-    //            LinkedIn = user.LinkedIn,
-    //            Github = user.Github,
-    //            Number = user.Number,
-    //        };
-
-    //        userDTO.City = cities.FirstOrDefault(city => city.AreaCode == user.CityId).Name;
-    //        return View(userDTO);
-
-    //    }
-    //    else { ReadAllUsers(); return Json(Users); }
+    {
+        if (ModelState.IsValid)
+        {
+            var user = _userService.GetById(userEditViewModel.User.Id);
+            if (ProfileImageFile != null && ProfileImageFile.Length > 0)
+            {
+                string extension = Path.GetExtension(ProfileImageFile.FileName);
+                string uniqueFileName = $"{Guid.NewGuid()}{extension}";
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", uniqueFileName);
+                using (var stream = new FileStream(path, FileMode.Create))
+                    ProfileImageFile.CopyTo(stream);
+                user.ProfileImageUrl = "/Images/" + uniqueFileName;
 
 
-    //}
-    //[Route("user")]
-    //[Route("work")]
-    //public IActionResult Render()
-    //{
-    //    var users = ReadAllUsers();
-    //    return Json(users);
-    //}
-    //[HttpGet]
-    //public IActionResult EditUser(Guid id)
-    //{
+            }
+            user.FirstName = userEditViewModel.User.FirstName;
+            user.LastName = userEditViewModel.User.LastName;
+            user.Age = userEditViewModel.User.Age;
+            user.Speciality = userEditViewModel.User.Speciality;
+            _userService.Update(user);
+            return RedirectToAction("Index");
+        }
+        return View(userEditViewModel);
+    }
 
-    //    if (id != Guid.Empty)
-    //    {
-    //        Users = ReadAllUsers();
+ 
+    public IActionResult Delete(int id)
+    {
 
-    //        var user = Users.FirstOrDefault(u => u.Id == id);
-    //        Console.WriteLine(user.Id + " IN GET");
-    //        var sCities = new List<SelectListItem>();
-    //        foreach (var item in cities)
-    //        {
-    //            sCities.Add(new SelectListItem { Text = item.Name, Value = item.AreaCode.ToString() });
+        var user = _userService.GetById(id);
+        _userService.Delete(user);
 
-    //        }
-
-    //        var vm = new UserEditViewModel()
-    //        {
-    //            Cities = sCities,
-    //            User = user,
-    //        };
-    //        return View(vm);
-    //    }
-    //    else { return Redirect("/home/index"); }
-    //}
-
-    //[HttpPost]
-    //public IActionResult EditUser(UserEditViewModel vm)
-    //{
-    //    if (ModelState.IsValid)
-    //    {
-    //        var user = vm.User;
-    //        Users = ReadAllUsers();
+        return RedirectToAction("Index");
 
 
-    //        var userToRemove = Users.FirstOrDefault(u => u.Id == user.Id);
-    //        if (userToRemove != null)
-    //        {
-    //            Users.Remove(userToRemove);
-    //        }
 
 
-    //        Users.Add(user);
 
-    //        WriteAllUsers();
-    //    }
-
-    //    return Redirect("/home/index");
-    //}
-
-    //public IActionResult Delete(Guid id)
-    //{
-
-    //    if (id != Guid.Empty)
-    //    {
-    //        Console.WriteLine(id + "deleted user id");
-    //        Users = ReadAllUsers();
-
-    //        var userToRemove = Users.FirstOrDefault(u => u.Id == id);
-    //        if (userToRemove != null)
-    //        {
-    //            Users.Remove(userToRemove);
-    //            Console.WriteLine("deleted user");
-
-    //        }
-
-    //        WriteAllUsers();
-    //    }
-    //    return Redirect("/home/index");
-    //}
+    }
 
 
-    //public IActionResult Back()
-    //{
 
-    //    return Redirect("/home/index");
-    //}
 
-    //public User ReadByID(Guid id)
-    //{
-    //    var users = ReadAllUsers();
-    //    var user = users.First(u => u.Id == id);
-    //    return user ?? new User();
-    //}
 }

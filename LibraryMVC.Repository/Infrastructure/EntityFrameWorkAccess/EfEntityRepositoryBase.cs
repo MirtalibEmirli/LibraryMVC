@@ -30,11 +30,15 @@ public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEnti
 
     public List<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null)
     {
-        throw new NotImplementedException();
+        using var context = new TContext();
+        return context.Set<TEntity>().ToList(); 
     }
 
     public void Update(TEntity entity)
     {
-        throw new NotImplementedException();
+        using var context = new TContext();
+        context.Update(entity);
+        context.SaveChanges();  
     }
+
 }

@@ -1,8 +1,37 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = "../../Views/Shared/HomeLayout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+ <!-- Main Content -->
+<div class="container my-5  ">
+    <div class="row text-center">
+
+        <a style="text-decoration:none;" class=" col-md-4 h-100 w-100 mb-4 border border-primary rounded " asp-action="Index" asp-controller="User">
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <h3>@ViewBag.UserCount</h3>
+                <p>Users</p>
+            </div>
+        </a>
+         
+        <a style="text-decoration:none;" class=" col-md-4 h-100 w-100 mb-4 border border-primary rounded " asp-action="Index" asp-controller="Book">
+            <div class="stat-card">
+                <i class="fas fa-book"></i>
+                <h3>@ViewBag.BookCount</h3>
+                <p>Books</p>
+            </div>
+        </a>
+
+        <a style="text-decoration:none;" class=" col-md-4 h-100 w-100 mb-4 border border-primary rounded " asp-action="Index" asp-controller="Course">
+            <div class="stat-card">
+                <i class="fas fa-graduation-cap"></i>
+                <h3>@ViewBag.CourseCount</h3>
+                <p>Courses</p>
+            </div>
+        </a>
+
+    </div>
 </div>
+
+
+
