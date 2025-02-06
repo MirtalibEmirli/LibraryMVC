@@ -1,0 +1,51 @@
+﻿@model LibraryMVC.Domain.Entities.Book
+@{
+    ViewData["Title"] = "MrLibrary";
+    Layout = "../../Views/Shared/BookLayout.cshtml";
+}
+
+
+<div class="container" style="max-width:600px ; margin:auto;">
+    <h2>Add New Book</h2>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+    <form asp-action="Add" method="post" asp-controller="Book" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+        <div class="user-card-header">
+
+            <img class="user-avatar" src="@Model.BookImage" alt="user" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Title" class="control-label">Title</label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Genre" class="control-label">Genre</label>
+            <input asp-for="Genre" class="form-control" />
+            <span asp-validation-for="Genre" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Author" class="control-label">Author</label>
+            <input asp-for="@Model.Author" class="form-control" />
+            <span asp-validation-for="@Model.Author" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.BookImage" class="control-label">BookImage </label>
+            <input id="image" src="@Model.BookImage" name="ImageFile" accept="image/*" type="file" class="form-control" />
+            <span asp-validation-for="@Model.BookImage" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" style="" class=" mb-4 mt-4 btn btn-primary">Add Book</button>
+            <a asp-action="Index" class="mb-4 mt-4 btn btn-outline-primary">Cancel</a>
+        </div>
+    </form>
+</div>

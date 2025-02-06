@@ -1,5 +1,35 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "MrLibrary";
+    Layout = "../../Views/Shared/BookLayout.cshtml";
+
 }
+
+@model List<LibraryMVC.Domain.Entities.Book>
+<div class="user-grid">
+    @foreach (var item in Model)
+    {
+        <div class="user-card">
+            <div class="user-card-header">
+                <span class="pro">PRO</span>
+                <img src="@item.BookImage" class="card-img-top rounded-circle mx-auto mt-3" alt="Book Image" style="width: 100px; height: 100px; object-fit: cover;">
+
+            </div>
+            <div class="user-card-body">
+                <h3>@item.Title </h3>
+                <p class="speciality">@item.Genre</p>
+
+            </div>
+            <div class="user-card-footer">
+                <a asp-action="Edit" asp-route-id="@item.Id" asp-controller="Book" class="btn btn-edit">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+                <a asp-action="Add" asp-route-id="@item.Id" asp-controller="Cart" class="btn btn-light">
+                     Add to Cart
+                </a>
+                <a asp-action="Details" asp-controller="Book" asp-route-id="@item.Id" class="btn btn-details">
+                    <i class="fas fa-info-circle"></i> Details
+                </a>
+            </div>
+        </div>
+    }
+</div>

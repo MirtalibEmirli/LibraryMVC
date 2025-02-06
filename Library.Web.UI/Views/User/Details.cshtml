@@ -1,0 +1,56 @@
+﻿@model LibraryMVC.Domain.Entities.User
+@{
+    ViewData["Title"] = "MrLibrary";
+    Layout = "../../Views/Shared/UserLayout.cshtml";
+}
+
+
+<div class="container" style="max-width:600px ; margin:auto;">
+    <h2>Details</h2>
+    @if (!ViewData.ModelState.IsValid)
+    {
+            <div class="alert alert-danger">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                        <p>@error.ErrorMessage</p>
+            }
+            </div>
+    }
+    <form asp-action="Details" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for=Id />
+        <div class="user-card-header">
+            <img class="user-avatar" src="@Url.Content(Model.ProfileImageUrl)" alt="user" />
+
+        </div>
+        <div class="form-group">
+            <label asp-for="FirstName" class="control-label">First Name</label>
+            <input readonly asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName" class="control-label">Last Name</label>
+            <input readonly asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Age" class="control-label">Age</label>
+            <input readonly asp-for="Age" class="form-control" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for=" Speciality" class="control-label">Speciality</label>
+            <input readonly asp-for="Speciality" class="form-control" />
+            <span asp-validation-for="Speciality" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <h4>
+                Readed Books
+            </h4>
+        </div>
+       
+        <div class="form-group">
+          
+            <a asp-action="Index" class="mb-4 mt-4 btn btn-outline-primary">Back To Home</a>
+        </div>
+    </form>
+</div>

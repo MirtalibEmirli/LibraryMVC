@@ -13,8 +13,8 @@ public class HomeController(IBookService bookService, IUserService userService, 
     {
 
         ViewBag.UserCount = _userService.GetAll().Count;
-        ViewBag.BookCount = _courseService.GetAll().Count;
-        ViewBag.CourseCount = _bookService.GetAll().Count;
+        ViewBag.BookCount =_bookService.GetAll().Count;
+        ViewBag.CourseCount = _courseService.GetAll().Count;
         return View();
     }
 

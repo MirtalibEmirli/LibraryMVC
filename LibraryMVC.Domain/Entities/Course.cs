@@ -19,6 +19,7 @@ public partial class Course : IEntity
     public int Price { get; set; }
 
     public string? CourseImg { get; set; }
+    public string? CourseLink { get; set; }
 
     public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

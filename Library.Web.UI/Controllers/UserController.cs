@@ -90,7 +90,12 @@ public class UserController(IUserService userService) : Controller
         }
         return View(userEditViewModel);
     }
+    public  IActionResult Details(int id)
+    {
+        var user = _userService.GetById(id);
 
+        return View(user);  
+    }
  
     public IActionResult Delete(int id)
     {
@@ -99,11 +104,6 @@ public class UserController(IUserService userService) : Controller
         _userService.Delete(user);
 
         return RedirectToAction("Index");
-
-
-
-
-
     }
 
 

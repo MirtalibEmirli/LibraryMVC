@@ -5,7 +5,7 @@
 }
 
 
-<div class="container">
+<div class="container" style="max-width:600px ; margin:auto;">
     <h2>Add New User</h2>
     @if (!ViewData.ModelState.IsValid)
     {
@@ -16,7 +16,7 @@
             }
         </div>
     }
-    <form asp-action="Add" method="post" enctype="multipart/form-data">
+    <form asp-action="Add" method="post" asp-controller="User" enctype="multipart/form-data">
         <input  type="hidden" asp-for="User.Id"/>
         <div class="user-card-header">
          
