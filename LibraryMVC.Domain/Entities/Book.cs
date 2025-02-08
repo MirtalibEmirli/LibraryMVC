@@ -13,8 +13,8 @@ public partial class Book:IEntity
     public  string? Title { get; set; }
 
     public string? BookImage { get; set; }
-
-
+    [Required(ErrorMessage = "Add Price")]
+    public int Price { get; set; }
     [Required(ErrorMessage ="Add Author")]
     public string? Author { get; set; }
     [Required(ErrorMessage = "Add Genre")]

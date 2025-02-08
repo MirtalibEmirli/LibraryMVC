@@ -1,4 +1,4 @@
-﻿@model LibraryMVC.Domain.Entities.Book
+﻿@model LibraryMVC.Domain.Entities.Course
 @{
     ViewData["Title"] = "MrLibrary";
     Layout = "../../Views/Shared/BookLayout.cshtml";
@@ -6,7 +6,7 @@
 
 
 <div class="container" style="max-width:600px ; margin:auto;">
-    <h2>Edit Book</h2>
+    <h2>Edit Course</h2>
     @if (!ViewData.ModelState.IsValid)
     {
         <div class="alert alert-danger">
@@ -16,51 +16,51 @@
             }
         </div>
     }
-    <form asp-action="Edit" method="post" asp-controller="Book" enctype="multipart/form-data">
+    <form asp-action="Edit" method="post" asp-controller="Course" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id" />
         <div class="user-card-header">
 
-            <img class="user-avatar" src="@Model.BookImage" alt="book" />
+            <img class="user-avatar" src="@Model.CourseImg" alt="CourseImg" />
         </div>
         <div class="form-group">
-            <label asp-for="Title" class="control-label">Title</label>
-            <input asp-for="Title" class="form-control" />
-            <span asp-validation-for="Title" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Genre" class="control-label">Genre</label>
-            <input asp-for="Genre" class="form-control" />
-            <span asp-validation-for="Genre" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.Author" class="control-label">Author</label>
-            <input asp-for="@Model.Author" class="form-control" />
-            <span asp-validation-for="@Model.Author" class="text-danger"></span>
+            <label asp-for="Name" class="control-label">CourseName</label>
+            <input asp-for=@Model.Name class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="@Model.Description" class="control-label">Description</label>
-            <input asp-for="@Model.Description" class="form-control" />
-            <span asp-validation-for="@Model.Description" class="text-danger"></span>
+            <label asp-for="@Model.Price" class="control-label">Price</label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="@Model.Pages" class="control-label">Pages</label>
-            <input asp-for="@Model.Pages" class="form-control" />
-            <span asp-validation-for="@Model.Pages" class="text-danger"></span>
+            <label asp-for="@Model.Duration" class="control-label">Duration</label>
+            <input asp-for="@Model.Duration" class="form-control" />
+            <span asp-validation-for="@Model.Duration" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.Skills" class="control-label">Required Skills</label>
+            <input asp-for="@Model.Skills" class="form-control" />
+            <span asp-validation-for="@Model.Skills" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="@Model.ReadCount" class="control-label">ReadCount</label>
-            <input asp-for="@Model.ReadCount" class="form-control" />
-            <span asp-validation-for="@Model.ReadCount" class="text-danger"></span>
+            <label asp-for="@Model.Mentor" class="control-label">Mentor</label>
+            <input asp-for="@Model.Mentor" class="form-control" />
+            <span asp-validation-for="@Model.Mentor" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label class="control-label">BookImage </label>
-            <input id="image" src="@Model.BookImage" name="ImageFile" accept="image/*" type="file" class="form-control" />
+            <label asp-for="@Model.CourseLink" class="control-label">CourseLink</label>
+            <input asp-for="@Model.CourseLink" class="form-control" />
+            <span asp-validation-for="@Model.CourseLink" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label">CourseImg </label>
+            <input id="image" src="@Model.CourseImg" name="ImageFile" accept="image/*" type="file" class="form-control" />
 
         </div>
         <div class="form-group">
-            <button type="submit" style="" class=" mb-4 mt-4 btn btn-primary">Save Book</button>
+            <button type="submit" style="" class=" mb-4 mt-4 btn btn-primary">Save </button>
             <a asp-action="Delete" class="mb-4 mt-4 btn  btn-danger" asp-route-id="@Model.Id">Delete</a>
             <a asp-action="Index" class="mb-4 mt-4 btn btn-outline-primary">Cancel</a>
         </div>
