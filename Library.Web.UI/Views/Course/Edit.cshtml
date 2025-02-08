@@ -6,7 +6,7 @@
 
 
 <div class="container" style="max-width:600px ; margin:auto;">
-    <h2>Add New Book</h2>
+    <h2>Edit Book</h2>
     @if (!ViewData.ModelState.IsValid)
     {
         <div class="alert alert-danger">
@@ -16,11 +16,11 @@
             }
         </div>
     }
-    <form asp-action="Add" method="post" asp-controller="Book" enctype="multipart/form-data">
+    <form asp-action="Edit" method="post" asp-controller="Book" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id" />
         <div class="user-card-header">
 
-            <img class="user-avatar" src="@Model.BookImage" alt="user" />
+            <img class="user-avatar" src="@Model.BookImage" alt="book" />
         </div>
         <div class="form-group">
             <label asp-for="Title" class="control-label">Title</label>
@@ -38,14 +38,31 @@
             <input asp-for="@Model.Author" class="form-control" />
             <span asp-validation-for="@Model.Author" class="text-danger"></span>
         </div>
+
         <div class="form-group">
-            <label asp-for="@Model.BookImage" class="control-label">BookImage </label>
-            <input id="image" src="@Model.BookImage" name="ImageFile" accept="image/*" type="file" class="form-control" />
-            <span asp-validation-for="@Model.BookImage" class="text-danger"></span>
+            <label asp-for="@Model.Description" class="control-label">Description</label>
+            <input asp-for="@Model.Description" class="form-control" />
+            <span asp-validation-for="@Model.Description" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <button type="submit" style="" class=" mb-4 mt-4 btn btn-primary">Add Book</button>
-            <a  asp-action="Index" class="mb-4 mt-4 btn btn-outline-primary">Cancel</a>
+            <label asp-for="@Model.Pages" class="control-label">Pages</label>
+            <input asp-for="@Model.Pages" class="form-control" />
+            <span asp-validation-for="@Model.Pages" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.ReadCount" class="control-label">ReadCount</label>
+            <input asp-for="@Model.ReadCount" class="form-control" />
+            <span asp-validation-for="@Model.ReadCount" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label">BookImage </label>
+            <input id="image" src="@Model.BookImage" name="ImageFile" accept="image/*" type="file" class="form-control" />
+
+        </div>
+        <div class="form-group">
+            <button type="submit" style="" class=" mb-4 mt-4 btn btn-primary">Save Book</button>
+            <a asp-action="Delete" class="mb-4 mt-4 btn  btn-danger" asp-route-id="@Model.Id">Delete</a>
+            <a asp-action="Index" class="mb-4 mt-4 btn btn-outline-primary">Cancel</a>
         </div>
     </form>
 </div>

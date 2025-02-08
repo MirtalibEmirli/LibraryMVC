@@ -1,13 +1,14 @@
 ﻿using LibraryMVC.Domain.Abstracts;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace LibraryMVC.Domain.Entities;
 
 public partial class Course : IEntity
 {
     public int Id { get; set; }
-
+    [Required(ErrorMessage ="The Name is required")]
     public string Name { get; set; } = null!;
 
     public string Duration { get; set; } = null!;

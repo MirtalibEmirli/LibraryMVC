@@ -7,6 +7,7 @@ namespace Library.Web.UI.Controllers;
 public class BookController(IBookService bookService) : Controller
 {
     private readonly IBookService _bookService = bookService;
+
     public IActionResult Index()
     {
         var books = _bookService.GetAll();
@@ -20,28 +21,21 @@ public class BookController(IBookService bookService) : Controller
         return View(book);
     }
 
+
+
     [HttpPost]
     public IActionResult Add(Book book, IFormFile? ImageFile)
     {
         ModelState.Remove("ImageFile");
 
-        if (ModelState.IsValid)
-        {
-            if (ImageFile != null && ImageFile.Length > 0)
-            {
-                var extension = Path.GetExtension(ImageFile.FileName);
-                var uniqueName = $"{Guid.NewGuid()}{extension}";
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", uniqueName);
-                using (var stream = new FileStream(path, FileMode.Create))
-                    ImageFile.CopyTo(stream);
-                book.BookImage = "/Images/" + uniqueName;
+        if (!ModelState.IsValid)
+            return View(book);
 
-            }
-            _bookService.Add(book);
-            return RedirectToAction("Index");
+        if (ImageFile != null)
+            book.BookImage = UploadImage(ImageFile);
+        _bookService.Add(book);
+        return RedirectToAction("Index");
 
-        }
-        return RedirectToAction("Add");
     }
 
     [HttpGet]
@@ -56,43 +50,59 @@ public class BookController(IBookService bookService) : Controller
     public IActionResult Edit(Book book, IFormFile? ImageFile)
     {
 
-        if (ModelState.IsValid)
-        {
-            var mainBook = _bookService.GetById(book.Id);
-            if (ImageFile != null && ImageFile.Length > 0)
-            {
-                var extension = Path.GetExtension(ImageFile.FileName);
-                var uniqueFileName = $"{Guid.NewGuid()}{extension}";
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", uniqueFileName);
+        if (!ModelState.IsValid)
+            return View(book);
 
-                using (var stream = new FileStream(path, FileMode.Create))
-                    ImageFile.CopyTo(stream);
+        var mainBook = _bookService.GetById(book.Id);
+        if (mainBook == null)
+            return NotFound();
 
-                mainBook.BookImage = "/Images/" + uniqueFileName;
-            }
-            mainBook.Author = book.Author;
-            mainBook.Title = book.Title;
-            mainBook.Description = book.Description;
-            mainBook.Genre = book.Genre;
-            mainBook.Pages = book.Pages;
-            mainBook.ReadCount = book.ReadCount;
-            _bookService.Update(mainBook);
+        if (ImageFile != null)
+            mainBook.BookImage = UploadImage(ImageFile);
 
-            return RedirectToAction("Index");
-        }
+        mainBook.Author = book.Author;
+        mainBook.Title = book.Title;
+        mainBook.Description = book.Description;
+        mainBook.Genre = book.Genre;
+        mainBook.Pages = book.Pages;
+        mainBook.ReadCount = book.ReadCount;
+        _bookService.Update(mainBook);
 
-        return View(book);
+        return RedirectToAction("Index");
+
     }
 
     public ActionResult Delete(int id)
     {
-
-        _bookService.Delete(_bookService.GetById(id));
+        var book = _bookService.GetById(id);
+        if (book == null) return NotFound();
+        _bookService.Delete(book);
         return RedirectToAction("Index");
 
     }
-    public IActionResult Details(int id) { 
-    var book = _bookService.GetById(id);    
-    return View(book);
+    public IActionResult Details(int id)
+    {
+        var book = _bookService.GetById(id);
+        if (book == null)
+            return NotFound();
+        return View(book);
+    }
+
+    public IActionResult BooksJson()
+    {
+        return Json(_bookService.GetAll());
+    }
+
+    public string UploadImage(IFormFile ImageFile)
+    {
+
+        string extension = Path.GetExtension(ImageFile.FileName);
+        string uniqueFileName = $"{Guid.NewGuid()}{extension}";
+        string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", uniqueFileName);
+        using (var stream = new FileStream(path, FileMode.Create))
+            ImageFile.CopyTo(stream);
+        return "/Images/" + uniqueFileName;
+
+
     }
 }

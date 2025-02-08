@@ -1,0 +1,68 @@
+﻿@model LibraryMVC.Domain.Entities.Course
+@{
+    ViewData["Title"] = "MrLibrary";
+    Layout = "../../Views/Shared/BookLayout.cshtml";
+}
+
+
+<div class="container" style="max-width:600px ; margin:auto;">
+    <h2>Add New Book</h2>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+    <form asp-action="Add" method="post" asp-controller="Book" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+        <div class="user-card-header">
+
+            <img class="user-avatar" src="@Model.CourseImg" alt="user" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Name" class="control-label">Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Price" class="control-label">Price</label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Mentor" class="control-label">Mentor</label>
+            <input asp-for="@Model.Mentor" class="form-control" />
+            <span asp-validation-for="@Model.Mentor" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.CourseLink" class="control-label">CourseLink</label>
+            <input asp-for="@Model.CourseLink" class="form-control" />
+            <span asp-validation-for="@Model.CourseLink" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Duration" class="control-label">Duration</label>
+            <input asp-for="@Model.Duration" class="form-control" />
+            <span asp-validation-for="@Model.Duration" class="text-danger"></span>
+        </div> 
+        <div class="form-group">
+            <label asp-for="@Model.Skills" class="control-label">Skills</label>
+            <input asp-for="@Model.Skills" class="form-control" />
+            <span asp-validation-for="@Model.Skills" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.CourseImg" class="control-label">CourseImg </label>
+            <input id="image" src="@Model.CourseImg" name="ImageFile" accept="image/*" type="file" class="form-control" />
+            <span asp-validation-for="@Model.CourseImg" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" style="" class=" mb-4 mt-4 btn btn-primary">Add Course</button>
+            <a asp-action="Index" class="mb-4 mt-4 btn btn-outline-primary">Cancel</a>
+        </div>
+    </form>
+</div>
