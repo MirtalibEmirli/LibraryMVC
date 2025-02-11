@@ -5,15 +5,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LibraryMVC.Domain.Entities;
 
-public partial class Book:IEntity
+public partial class Book: IProductPrice
 {
-    public int Id { get; set; }
+   
 
     [Required(ErrorMessage ="Add Title")]
     public  string? Title { get; set; }
 
     public string? BookImage { get; set; }
     [Required(ErrorMessage = "Add Price")]
+
     public int Price { get; set; }
     [Required(ErrorMessage ="Add Author")]
     public string? Author { get; set; }
@@ -27,4 +28,5 @@ public partial class Book:IEntity
     public int? ReadCount { get; set; }
 
     public virtual ICollection<User> Users { get; set; } = new List<User>();
+    public int Id { get ; set ; }
 }

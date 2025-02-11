@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LibraryMVC.Domain.Entities;
 
-public partial class Course : IEntity
+public partial class Course : IProductPrice
 {
     public int Id { get; set; }
     

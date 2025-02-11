@@ -2,18 +2,18 @@
     Layout = "../../Views/Shared/HomeLayout";
 }
 
-<div class="container my-5  ">
+<div class="container my-5 ">
     <div class="row text-center">
 
         <a style="text-decoration:none;" class=" col-md-4 h-100 w-100 mb-4 border border-primary rounded " asp-action="Index" asp-controller="User">
-            <div class="stat-card">
+            <div class="stat-card ">
                 <i class="fas fa-users"></i>
                 <h3>@ViewBag.UserCount</h3>
                 <p>Users</p>
             </div>
         </a>
          
-        <a style="text-decoration:none;" class=" col-md-4 h-100 w-100 mb-4 border border-primary rounded " asp-action="Index" asp-controller="Book">
+        <a style="text-decoration:none;" class=" col-md-4 h-100 w-100 mb-4 border border-primary rounded " asp-route-pageName="Book" asp-action="Index" asp-controller="Book">
             <div class="stat-card">
                 <i class="fas fa-book"></i>
                 <h3>@ViewBag.BookCount</h3>
@@ -21,7 +21,7 @@
             </div>
         </a>
 
-        <a style="text-decoration:none;" class=" col-md-4 h-100 w-100 mb-4 border border-primary rounded " asp-action="Index" asp-controller="Course">
+        <a style="text-decoration:none;" class=" col-md-4 h-100 w-100 mb-4 border border-primary rounded " asp-route-pageName="Course" asp-action="Index" asp-controller="Course">
             <div class="stat-card">
                 <i class="fas fa-graduation-cap"></i>
                 <h3>@ViewBag.CourseCount</h3>

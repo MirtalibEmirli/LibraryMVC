@@ -1,6 +1,8 @@
-﻿using LibraryMVC.Application.Abstracts;
+﻿using Library.Web.UI.Models;
+using LibraryMVC.Application.Abstracts;
 using LibraryMVC.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Library.Web.UI.Controllers;
 
@@ -8,10 +10,22 @@ public class BookController(IBookService bookService) : Controller
 {
     private readonly IBookService _bookService = bookService;
 
-    public IActionResult Index()
+    public IActionResult Index(int page=1,string pageName="Book")
     {
+        int pageSize = 4;
+        
         var books = _bookService.GetAll();
-        return View(books);
+        var pagedBooks= books.Skip((page - 1)*pageSize).Take(pageSize).ToList();
+
+        var model = new BookListViewModel
+        {
+            PageSize = pageSize,
+            PageCount = (int)Math.Ceiling(books.Count / (double)(pageSize)),
+            CurrentPage = page,
+            Books = pagedBooks,
+            PageName = pageName
+        };
+        return View(model);
     }
 
     [HttpGet]

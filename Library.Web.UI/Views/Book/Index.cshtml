@@ -3,10 +3,18 @@
     Layout = "../../Views/Shared/BookLayout.cshtml";
 
 }
+@using Library.Web.UI.Models
+@model BookListViewModel
+@if (TempData["message"] != null)
+{
 
-@model List<LibraryMVC.Domain.Entities.Book>
+    <div class="alert alert-success">
+        @TempData["message"]
+    </div>
+}
 <div class="user-grid">
-    @foreach (var item in Model)
+   
+    @foreach (var item in Model.Books)
     {
         <div class="user-card">
             <div class="user-card-header">
@@ -24,7 +32,7 @@
                 <a asp-action="Edit" asp-route-id="@item.Id" asp-controller="Book" class="btn btn-edit">
                     <i class="fas fa-edit"></i> Edit
                 </a>
-                <a asp-action="Add" asp-route-id="@item.Id" asp-controller="Cart" class="btn btn-light">
+                <a asp-action="AddtoCart" asp-route-id="@item.Id" asp-route-name="Book" asp-controller="Cart" class="btn btn-light">
                      Add to Cart
                 </a>
                 <a asp-action="Details" asp-controller="Book" asp-route-id="@item.Id" class="btn btn-details">
@@ -33,4 +41,13 @@
             </div>
         </div>
     }
+    
+    
+
+</div>
+<div class="flex align-items-center w-100  justify-content-center ">
+    <list-pager current-page="@Model.CurrentPage" page-count="@Model.PageCount"
+                page-size="@Model.PageSize" page-name="@Model.PageName">
+
+    </list-pager>
 </div>
