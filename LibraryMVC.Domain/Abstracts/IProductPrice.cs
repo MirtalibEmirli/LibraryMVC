@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryMVC.Domain.Abstracts
+namespace LibraryMVC.Domain.Abstracts;
+
+public interface IProductPrice:IEntity
 {
-    public interface IProductPrice:IEntity
-    {
-        public int Price { get; set; }
-    }
+    public int Price { get; set; }
+    public string Name { get; set; }
+
 }

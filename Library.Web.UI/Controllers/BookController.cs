@@ -75,7 +75,7 @@ public class BookController(IBookService bookService) : Controller
             mainBook.BookImage = UploadImage(ImageFile);
 
         mainBook.Author = book.Author;
-        mainBook.Title = book.Title;
+        mainBook.Name = book.Name;
         mainBook.Description = book.Description;
         mainBook.Genre = book.Genre;
         mainBook.Pages = book.Pages;

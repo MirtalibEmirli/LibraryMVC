@@ -44,7 +44,7 @@ public partial class LibraryDbContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.ReadCount).HasDefaultValue(0);
-            entity.Property(e => e.Title)
+            entity.Property(e => e.Name)
                 .HasMaxLength(100)
                 .IsUnicode(false);
         });
